@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+import BarraMenu from './BarraMenu'
 import CurrentUser from './CurrentUser'
+import UltimasCotizaciones from './UltimasCotizaciones'
 
 class Cotizador extends Component {
   constructor(props){
@@ -9,7 +11,8 @@ class Cotizador extends Component {
     
     return(
       <div>
-        <CurrentUser user={this.props.user} />
+        <BarraMenu user={this.props.user} />
+        <UltimasCotizaciones />
       </div>
     )
   }
