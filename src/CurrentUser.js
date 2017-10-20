@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {auth} from './firebase'
-import {Media} from 'reactstrap'
+import {Media, Button} from 'reactstrap'
 import './CurrentUser.css'
 
 class CurrentUser extends Component{
@@ -21,7 +21,7 @@ class CurrentUser extends Component{
                         <img src={user.photoURL} alt={user.displayName} className='CurrentUser--photo' />
                         <h3>{user.displayName}</h3>
                         <p>{user.email}</p>
-                        <button onClick={this.handleClick}>Salir</button>
+                        <Button onClick={this.handleClick}>Salir</Button>
                     </span>
                 </Media>
                 

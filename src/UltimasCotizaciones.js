@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import {Container, Row, Col, Button, Table} from 'reactstrap'
+import {Container, Row, Col, Button, Table, NavLink} from 'reactstrap'
+import map from 'lodash/map'
 
 class UltimasCotizaciones extends Component{
+    
     render(){
         return(
             <div>
@@ -34,31 +36,30 @@ class UltimasCotizaciones extends Component{
                                     <td>100</td>
                                     <td>Boletas</td>
                                     <td>12/10/2107</td>
-                                    <td><a href="#">Ver</a></td>
+                                    <td><NavLink href="#">Ver</NavLink></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">2</th>
                                     <td>Sebastian</td>
                                     <td>Castillo y Castillo Ltda.</td>
                                     <td>100</td>
                                     <td>Boletas</td>
                                     <td>12/10/2107</td>
-                                    <td><a href="#">Ver</a></td>
+                                    <td><NavLink href="#">Ver</NavLink></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">3</th>
                                     <td>Sebastian</td>
                                     <td>Castillo y Castillo Ltda.</td>
                                     <td>100</td>
                                     <td>Boletas</td>
                                     <td>12/10/2107</td>
-                                    <td><a href="#">Ver</a></td>
+                                    <td><NavLink href="#">Ver</NavLink></td>
                                 </tr>
                             </tbody>
                         </Table>
                     </Row>
                 </Container>
-                
             </div>
             
         )

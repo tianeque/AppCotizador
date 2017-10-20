@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { auth, database } from './firebase'
 import SignIn from './SignIn'
 import Cotizador from './Cotizador'
-import Calculos from './Calculos'
 
 class App extends Component {
   constructor(){
@@ -16,18 +15,24 @@ class App extends Component {
     auth.onAuthStateChanged(
       (user) => {
         this.setState({ user })
+        this.cotizacionDbRef = database.ref('cotizacion')
+        this.cotizacionDbRef.on('value', snapshot => {
+            this.setState({
+                cotizaciones : snapshot.val()
+            })
+        })
       }
     )
   }
 
   render() {
-    const {user} = this.state
+    const {user, cotizaciones} = this.state
 
     return (
       <div>
-        {this.state.user ? 
+        {user ? 
         
-        <Cotizador {...this.state} /> : 
+        <Cotizador user={user} cotizaciones={cotizaciones}/> : 
         <SignIn />}
       </div>
     );
