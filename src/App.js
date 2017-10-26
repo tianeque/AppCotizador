@@ -32,7 +32,12 @@ class App extends Component {
       <div>
         {user ? 
         
-        <Cotizador user={user} cotizaciones={cotizaciones}/> : 
+        <Cotizador 
+          user={user}
+          cotizaciones={cotizaciones} 
+          cotizacionDbRef={this.cotizacionDbRef}
+        />
+        : 
         <SignIn />}
       </div>
     );

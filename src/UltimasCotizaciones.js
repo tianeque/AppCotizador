@@ -1,10 +1,22 @@
 import React, {Component} from 'react'
 import {Container, Row, Col, Button, Table, NavLink} from 'reactstrap'
 import map from 'lodash/map'
+import NuevaCotizacion from './NuevaCotizacion'
 
 class UltimasCotizaciones extends Component{
-    
+    constructor(props){
+        super(props)
+        this.state = {
+            nuevaCotizacion : true,
+        }
+    }
+
+    componentDidMount(){
+        
+    }
+
     render(){
+        const {cotizaciones} = this.props
         return(
             <div>
                 <Container>
@@ -14,6 +26,11 @@ class UltimasCotizaciones extends Component{
                     <Row>
                         <Button color="primary">Nueva</Button>
                         <Button color="primary">Configuración</Button>
+                    </Row>
+                    <Row>
+
+                    {this.state.nuevaCotizacion && <NuevaCotizacion />}
+
                     </Row>
                     <Row>
                         <Table hover>
@@ -29,33 +46,22 @@ class UltimasCotizaciones extends Component{
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Sebastian</td>
-                                    <td>Castillo y Castillo Ltda.</td>
-                                    <td>100</td>
-                                    <td>Boletas</td>
-                                    <td>12/10/2107</td>
-                                    <td><NavLink href="#">Ver</NavLink></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Sebastian</td>
-                                    <td>Castillo y Castillo Ltda.</td>
-                                    <td>100</td>
-                                    <td>Boletas</td>
-                                    <td>12/10/2107</td>
-                                    <td><NavLink href="#">Ver</NavLink></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Sebastian</td>
-                                    <td>Castillo y Castillo Ltda.</td>
-                                    <td>100</td>
-                                    <td>Boletas</td>
-                                    <td>12/10/2107</td>
-                                    <td><NavLink href="#">Ver</NavLink></td>
-                                </tr>
+                                {
+                                    map(cotizaciones,(cotizacion, key) => {
+                                        return(
+                                        <tr key={key}>
+                                            <th scope="row">{key}</th>
+                                            <td>{cotizacion.nombre}</td>
+                                            <td>{cotizacion.empresa}</td>
+                                            <td>{cotizacion.cantidad}</td>
+                                            <td>{cotizacion.producto}</td>
+                                            <td>{cotizacion.fecha}</td>
+                                            <td><NavLink href="#">Ver</NavLink></td>
+                                        </tr>
+                                    )
+                                    })
+                                }
+                                
                             </tbody>
                         </Table>
                     </Row>

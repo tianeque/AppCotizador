@@ -9,7 +9,7 @@ class Cotizador extends Component {
     return(
       <div>
         <BarraMenu user={this.props.user} />
-        <UltimasCotizaciones cotizaciones={this.props.cotizaciones}/>
+        <UltimasCotizaciones cotizaciones={this.props.cotizaciones} cotizacionDbRef={this.cotizacionDbRef}/>
       </div>
     )
   }
