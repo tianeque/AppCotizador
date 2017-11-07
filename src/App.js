@@ -30,15 +30,19 @@ class App extends Component {
 
     return (
       <div>
-        {user ? 
+        {
+        
+        user ? 
         
         <Cotizador 
           user={user}
           cotizaciones={cotizaciones} 
           cotizacionDbRef={this.cotizacionDbRef}
-        />
-        : 
-        <SignIn />}
+        /> :
+
+        <SignIn />
+        
+        }
       </div>
     );
   }

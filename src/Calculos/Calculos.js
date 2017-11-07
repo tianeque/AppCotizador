@@ -1,12 +1,12 @@
 import ceil from 'lodash/ceil'
 
 class Calculos {
-  constructor(){
-    this.trabajo = 'Boletas'
-    this.cantidad = 500
-    this.multiplicidad = 3
-    this.moldes = 2
-    this.sobrantes = 10
+  constructor(parametros){
+    this.producto = 'Boletas'
+    this.cantidad = parametros.cantidad
+    this.multiplicidad = parametros.multiplicidad
+    this.moldes = parametros.moldes
+    this.sobrantes = parametros.sobrantes
     this.unTal = 50
     this.alzado = true
     this.separado = true
@@ -14,6 +14,7 @@ class Calculos {
     this.corte = true
     this.perforado = true
     this.diseno = 1000
+    this.tipoCliente = 'imprenta'
 
     this.pagoOperacionesMenores = 15
     this.pagoAlzado = 500
@@ -26,14 +27,36 @@ class Calculos {
     this.hojasResma = 500
     this.valorResma = 2860
     this.valorTinta = 1.6
+    
+  }
+
+  validacion(){
+    if (this.producto && 
+      this.cantidad &&  
+      this.tipoCliente && 
+      this.multiplicidad && 
+      this.sobrantes && 
+       this.moldes && 
+      this.unTal && 
+      this.diseno) {
+      return true
+    } else {
+      return false
+    }
   }
 
   tirajeUtil(){
-    return this.cantidad*this.multiplicidad/this.moldes
+
+    return this.validacion() ?
+    this.cantidad*this.multiplicidad/this.moldes 
+    : 0
+
   }
   
   tirajeReal(){
-    return this.tirajeUtil() + this.sobrantes*this.multiplicidad
+    return this.validacion() ?
+    this.tirajeUtil() + this.sobrantes*this.multiplicidad
+    : 0
   }
 
   costoDiseno(){
@@ -41,7 +64,9 @@ class Calculos {
   }
 
   costoPapel(){
-    return ceil(this.valorResma/this.hojasResma * this.tirajeReal())
+    return this.validacion() ?
+    ceil(this.valorResma/this.hojasResma * this.tirajeReal())
+    : 0
   }
 
   costoImpresion(){
@@ -94,14 +119,16 @@ class Calculos {
       this.costoCorte() +
       this.costoTerminado()
 
-    return ceil(totalCostoOperacional,0)
+    return this.validacion() ? 
+      ceil(totalCostoOperacional,0)
+      : 0
   }
 
   costoTotal(){
-    return this.costoOperacional()*(1+this.gg)
+    return ceil(this.costoOperacional()*(1+this.gg),0)
   }
 
-  precioDeVenta(){
+  precioDeVenta(){    
     return ceil(this.costoTotal()*(1+this.utilidad)+this.impuesto*this.costoTotal()*this.utilidad, -2)
   }
 }
