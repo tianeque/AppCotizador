@@ -9,6 +9,9 @@
 # production
 /build
 
+# calculadora jquery: Se ignora ya que se desea convertir esta lógica a React
+/src/Components/CalculadoraDeCorte/calculadora.js
+
 # misc
 .DS_Store
 .env.local

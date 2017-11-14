@@ -4,7 +4,7 @@ const Pliego = () => {
     return(
       <div>
           <h6>Pliego</h6>
-          <canvas></canvas>
+          <canvas id="micanvas"></canvas>
       </div>
     )
   }
