@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Container, Row, Col, Button, Table, NavLink} from 'reactstrap'
 import map from 'lodash/map'
 import NuevaCotizacion from './NuevaCotizacion'
+import {database} from './firebase'
 
 class UltimasCotizaciones extends Component{
     constructor(props){
@@ -9,11 +10,11 @@ class UltimasCotizaciones extends Component{
         this.state = {
             nuevaCotizacion : true,
         }
+
+        this.refCotizacion = database.ref().child('cotizacion')
+
     }
 
-    componentDidMount(){
-        
-    }
 
     render(){
         const {cotizaciones} = this.props
@@ -57,6 +58,7 @@ class UltimasCotizaciones extends Component{
                                             <td>{cotizacion.producto}</td>
                                             <td>{cotizacion.fecha}</td>
                                             <td><NavLink href="#">Ver</NavLink></td>
+                                            <td><input type="button" value ="Borrar" onClick={() => this.refCotizacion.child(key).remove()} /></td>
                                         </tr>
                                     )
                                     })

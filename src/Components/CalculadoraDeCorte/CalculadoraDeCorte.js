@@ -16,9 +16,10 @@ class CalculadoraDeCorte extends Component {
       corte_ancho: null,
       corte_largo: null,
       cortes_deseados: null,
-      tipo_de_corte: null,
+      tipo_de_corte: null, 
     }
     this.handleChange = this.handleChange.bind(this)
+    this.validarForma = this.validarForma.bind(this)
   }
 
   handleChange(e){
@@ -27,6 +28,16 @@ class CalculadoraDeCorte extends Component {
     e.target.id === "corte_ancho" && this.setState({corte_ancho: e.target.value})
     e.target.id === "corte_largo" && this.setState({corte_largo: e.target.value})
     e.target.id === "cortes_deseados" && this.setState({cortes_deseados: e.target.value})
+  }
+
+  //Funciones propias de la calculadora
+  validarForma(){
+    const {papel_ancho, papel_largo,corte_ancho,corte_largo,cortes_deseados} = this.state
+    if (papel_ancho || papel_largo || corte_ancho || corte_largo || cortes_deseados){
+      return true
+    } else {
+      return false
+    }
   }
 
   render(){
