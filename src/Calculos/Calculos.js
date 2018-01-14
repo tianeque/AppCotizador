@@ -7,17 +7,18 @@ class Calculos {
     this.multiplicidad = parametros.multiplicidad
     this.moldes = parametros.moldes
     this.sobrantes = parametros.sobrantes
-    this.unTal = 50
+    this.unTal = parametros.unTal
     this.alzado = true
     this.separado = true
     this.corcheteado = true
     this.corte = true
     this.perforado = true
-    this.diseno = 1000
+    this.diseno = parametros.diseno
     this.tipoCliente = 'imprenta'
 
+
     this.pagoOperacionesMenores = 15
-    this.pagoAlzado = 500
+    this.pagoAlzado = 600
     this.pagoImpresion = 1600
     
     this.gg = .45
@@ -36,7 +37,7 @@ class Calculos {
       this.tipoCliente && 
       this.multiplicidad && 
       this.sobrantes && 
-       this.moldes && 
+      this.moldes && 
       this.unTal && 
       this.diseno) {
       return true
@@ -81,17 +82,17 @@ class Calculos {
            : 0
   }
   costoSeparado(){
-    return this.separado ? 
+    return this.separado && this.unTal? 
            this.tirajeUtil()/this.unTal*this.pagoOperacionesMenores
            : 0
   }
   costoCorcheteado(){
-    return this.corcheteado ? 
+    return this.corcheteado && this.unTal? 
            this.tirajeUtil()/this.unTal*this.pagoOperacionesMenores
            : 0
   }
   costoCorte(){
-    return this.corte ? 
+    return this.corte && this.unTal? 
            this.tirajeUtil()/this.unTal*this.pagoOperacionesMenores
            : 0
   }
@@ -101,14 +102,17 @@ class Calculos {
            : 0
   }
   costoTerminado(){
-    return this.tirajeUtil()/this.unTal*this.pagoOperacionesMenores
+    return this.unTal ?
+           this.tirajeUtil()/this.unTal*this.pagoOperacionesMenores
+           : 0
   }
   redondeoAMil(x){
     return Math.ceil(x/1000)*1000
   }
 
   costoOperacional() {
-    const totalCostoOperacional =  this.costoDiseno() + 
+    console.log(this.costoDiseno())
+    const totalCostoOperacional =  parseInt(this.costoDiseno(),10) + 
       this.costoPapel() +
       this.costoImpresion() +
       this.costoImpresionManoObra() +
@@ -128,7 +132,7 @@ class Calculos {
     return ceil(this.costoOperacional()*(1+this.gg),0)
   }
 
-  precioDeVenta(){    
+  precioDeVenta(){
     return ceil(this.costoTotal()*(1+this.utilidad)+this.impuesto*this.costoTotal()*this.utilidad, -2)
   }
 }

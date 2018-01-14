@@ -13,6 +13,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
+    "react-popper": "^0.7.4",
     "react-scripts": "1.0.13",
     "reactstrap": "^4.8.0"
   },

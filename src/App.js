@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { auth, database } from './firebase'
 import SignIn from './SignIn'
-import Cotizador from './Cotizador'
+import Cotizador from './Components/Cotizador/Cotizador'
 
 class App extends Component {
   constructor(){

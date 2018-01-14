@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {Container, Row, Col, Button, Table, NavLink} from 'reactstrap'
 import map from 'lodash/map'
-import NuevaCotizacion from './NuevaCotizacion'
-import {database} from './firebase'
+import {database} from '../../firebase'
 
 class UltimasCotizaciones extends Component{
     constructor(props){
@@ -28,11 +27,7 @@ class UltimasCotizaciones extends Component{
                         <Button color="primary">Nueva</Button>
                         <Button color="primary">Configuración</Button>
                     </Row>
-                    <Row>
 
-                    {this.state.nuevaCotizacion && <NuevaCotizacion />}
-
-                    </Row>
                     <Row>
                         <Table hover>
                             <thead>
@@ -57,7 +52,7 @@ class UltimasCotizaciones extends Component{
                                             <td>{cotizacion.cantidad}</td>
                                             <td>{cotizacion.producto}</td>
                                             <td>{cotizacion.fecha}</td>
-                                            <td><NavLink href="#">Ver</NavLink></td>
+                                            <td><input type="button" value ="Ver" onClick={() => console.log(cotizacion)} /></td>
                                             <td><input type="button" value ="Borrar" onClick={() => this.refCotizacion.child(key).remove()} /></td>
                                         </tr>
                                     )

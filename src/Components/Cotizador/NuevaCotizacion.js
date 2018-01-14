@@ -1,12 +1,17 @@
 import React, {Component} from 'react'
 import { Col, Row, Button, Form, FormGroup, Label, Input, FormText, Table, Card, CardTitle, CardText} from 'reactstrap';
-import {database} from './firebase'
-import calculos from './Calculos/Calculos'
+import {database} from '../../firebase'
+import calculos from '../../Calculos/Calculos'
 import numberToCLPFormater from 'numbertoclpformater'
-
 
 import './nueva-cotizacion.css'
 
+const Boton = (props) => {
+    return(
+        <Button onClick = {props.onClick}>Generar</Button>
+    )
+}
+//Esta clase se va a encargar de 
 class NuevaCotizacion extends Component {
     constructor(){
         super()
@@ -20,7 +25,7 @@ class NuevaCotizacion extends Component {
             multiplicidad: '',
             sobrantes: '',
             moldes: '',
-            untal: '',
+            unTal: '',
             diseno: '',
             
             tipoCliente: '',
@@ -29,10 +34,27 @@ class NuevaCotizacion extends Component {
         
         this.CLP = numberToCLPFormater.numberToCLPFormater
         this.cotizacionRef = database.ref('/cotizacion')
+
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleClick = this.handleClick.bind(this)
+        this.generarEstado = this.generarEstado.bind(this)
         
+    }
+
+    generarEstado(){
+        this.setState({
+            nombre: "Sebastian",
+            empresa: "Castillo y Castillo Limitada",
+            cantidad: 1000,
+            producto: 'Boletas',
+            fecha: Date(),
+            multiplicidad: 4,
+            sobrantes:10,
+            moldes: 1,
+            unTal:50,
+            diseno:1000
+        })
     }
 
     handleChange(ev){
@@ -45,7 +67,7 @@ class NuevaCotizacion extends Component {
         ev.target.id === 'multiplicidad' && this.setState({multiplicidad: ev.target.value})
         ev.target.id === 'sobrantes' && this.setState({sobrantes: ev.target.value})
         ev.target.id === 'moldes' && this.setState({moldes: ev.target.value})
-        ev.target.id === 'untal' && this.setState({untal: ev.target.value})
+        ev.target.id === 'unTal' && this.setState({unTal: ev.target.value})
         ev.target.id === 'diseno' && this.setState({diseno: ev.target.value})
 
     }
@@ -64,7 +86,7 @@ class NuevaCotizacion extends Component {
                 multiplicidad: this.state.multiplicidad,
                 sobrantes: this.state.sobrantes,
                 moldes: this.state.moldes,
-                untal: this.state.untal,
+                unTal: this.state.unTal,
                 diseno: this.state.diseno,
                 tipoCliente: this.state.tipoCliente,
             }
@@ -81,8 +103,15 @@ class NuevaCotizacion extends Component {
     render(){
 
         //creando una instancia de la clase Calculos.js
-        const calcs = new calculos({...this.state}) 
-        const camposParametrosTecnicos = ["multiplicidad", "sobrantes", "moldes", "untal", "diseno"]
+        const calcs = new calculos({...this.state})
+
+        const camposParametrosTecnicos = [
+            {nombre:"multiplicidad",valor:this.state.multiplicidad}, 
+            {nombre:"sobrantes",valor:this.state.sobrantes}, 
+            {nombre:"moldes",valor:this.state.moldes}, 
+            {nombre:"unTal",valor:this.state.unTal}, 
+            {nombre:"diseno",valor:this.state.diseno},
+        ]
         
         const camposInformacionAdicional = [
             {campo: 'Tiraje Util', id:'tirajeUtil', valor: calcs.tirajeUtil(), tipoDeValor: 'escalar'},
@@ -101,38 +130,40 @@ class NuevaCotizacion extends Component {
         ]
 
         return(
+
             <Row>
                 {/* Informacion Base */}
                 <Col>
+                    <Boton onClick = {this.generarEstado} />
                     <Form className="nueva-cotizacion">
                         <FormGroup row>
                             <Label for="nombre" sm={2}>Nombre</Label>
                             <Col sm={10}>
-                                <Input type="text" name="nombre" id="nombre" onChange={this.handleChange}/>
+                                <Input type="text" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.nombre}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="empresa" sm={2}>Empresa</Label>
                             <Col sm={10}>
-                                <Input type="text" name="empresa" id="empresa" onChange={this.handleChange}/>
+                                <Input type="text" name="empresa" id="empresa" onChange={this.handleChange} value={this.state.empresa}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="cantidad" sm={2}>Cantidad</Label>
                             <Col sm={10}>
-                                <Input type="text" name="cantidad" id="cantidad" onChange={this.handleChange}/>
+                                <Input type="text" name="cantidad" id="cantidad" onChange={this.handleChange} value={this.state.cantidad}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="producto" sm={2}>Producto</Label>
                             <Col sm={10}>
-                                <Input type="text" name="producto" id="producto" onChange={this.handleChange}/>
+                                <Input type="text" name="producto" id="producto" onChange={this.handleChange} value={this.state.producto}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="fecha" sm={2}>Fecha</Label>
                             <Col sm={10}>
-                                <Input type="date" name="fecha" id="fecha" onChange={this.handleChange}/>
+                                <Input type="date" name="fecha" id="fecha" onChange={this.handleChange} value={this.state.fecha}/>
                             </Col>
                         </FormGroup>
 
@@ -177,9 +208,9 @@ class NuevaCotizacion extends Component {
                             (campo, key) => {
                                 return(
                                     <FormGroup row key={key}>
-                                        <Label for={campo} sm={2} id = {key}>{campo}</Label>
+                                        <Label for={campo.nombre} sm={2} id = {key}>{campo.nombre}</Label>
                                         <Col sm={{size:8, push:1}} id={key}>
-                                            <Input type="text" name={campo} id={campo} onChange={this.handleChange}/>
+                                            <Input type="text" name={campo.nombre} id={campo.nombre} onChange={this.handleChange} value={campo.valor} />
                                         </Col>
                                     </FormGroup>
                                 )

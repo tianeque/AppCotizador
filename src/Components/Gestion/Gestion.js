@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import { Table } from 'reactstrap'
+import { Table, Container } from 'reactstrap'
 import faker from '../../data'
-
+import {database} from '../../firebase'
+import Pedidos from './Pedidos'
+import Clientes from './Clientes'
 
 
 class Gestion extends Component {
@@ -9,60 +11,32 @@ class Gestion extends Component {
     constructor(){
         super()
         this.state = {
-            nombre: 'Marta',
-            caracteristica: 'reeeeeeeeeca',
+            pedidos: null,
+            clientes: null,
         }
-
-        this.data = [
-            {
-                n:1, 
-                firstName: faker.name.findName(), 
-                lastName: faker.name.findName(), 
-                userName: '@mdo'
-            },
-            {
-                n:2, 
-                firstName: 'Sebastian', 
-                lastName: 'Castillo', 
-                userName: '@scs'
-            },
-            {
-                n:2, 
-                firstName: 'Pablo', 
-                lastName: 'Castillo', 
-                userName: '@pcr'
-            }
-        ]
-        
     }
 
+    componentDidMount(){
+        this.pedidosDbRef = database.ref('pedidos')
+        this.clientesDbRef = database.ref('clientes')
+        this.pedidosDbRef.on('value', snapshot => {
+            this.setState({
+                pedidos: snapshot.val()
+            })
+        })
+        this.clientesDbRef.on('value', snapshot => {
+            this.setState({
+                clientes: snapshot.val()
+            })
+        })
+    }
     render() {
-        
+        const {pedidos, clientes} = this.state
         return(
-            <Table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-              </tr>
-            </thead>
-            <tbody>
-                {
-                    this.data.map(n => {
-                        return(
-                            <tr>
-                                <th scope="row">{n.n}</th>
-                                <td>{n.firstName}</td>
-                                <td>{n.lastName}</td>
-                                <td>{n.userName}</td>
-                            </tr>
-                        )
-                    })
-                }
-            </tbody>
-          </Table>
+            <Container>
+                <Pedidos pedidos={pedidos} />
+                <Clientes clientes={clientes} />
+            </Container>
         )
     }
 }
